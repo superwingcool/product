@@ -1,7 +1,6 @@
 package com.wing.product.controller;
 
 import com.wing.product.entity.ProductInfo;
-import com.wing.product.service.CategoryService;
 import com.wing.product.service.ProductService;
 import com.wing.product.util.ResultVOUtil;
 import com.wing.product.vo.ProductVO;
