@@ -10,4 +10,6 @@ import java.util.List;
 public interface ProductInfoRepository extends JpaRepository<ProductInfo, String> {
 
     List<ProductInfo> findByProductStatus(ProductStatusEnum productStatus);
+
+    List<ProductInfo> findByProductIdIn(List<String> productIds);
 }

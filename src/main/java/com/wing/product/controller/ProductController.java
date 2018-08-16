@@ -3,16 +3,18 @@ package com.wing.product.controller;
 import com.wing.product.entity.ProductInfo;
 import com.wing.product.service.ProductService;
 import com.wing.product.util.ResultVOUtil;
+import com.wing.product.vo.CartVO;
 import com.wing.product.vo.ProductVO;
 import com.wing.product.vo.ResultVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
@@ -34,5 +36,16 @@ public class ProductController {
             productVOs.add(productVO);
         });
         return ResultVOUtil.success(productVOs);
+    }
+
+    @GetMapping("/{productIds}")
+    public List<ProductInfo> getProductsByIds(@PathVariable("productIds") String[] productIds) {
+        return productService.getProductsByIds(productIds);
+    }
+
+    @PutMapping("/decreaseStock")
+    @ResponseStatus(HttpStatus.OK)
+    public void decreaseStock(@RequestBody List<CartVO> carts) {
+        productService.decreaseStock(carts);
     }
 }
