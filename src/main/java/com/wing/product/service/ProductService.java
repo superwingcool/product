@@ -4,14 +4,13 @@ import com.wing.product.entity.ProductInfo;
 import com.wing.product.enums.ProductStatusEnum;
 import com.wing.product.exception.ProductException;
 import com.wing.product.repository.ProductInfoRepository;
+import com.wing.product.util.JsonMapper;
 import com.wing.product.vo.CartVO;
-import com.wing.product.vo.ProductVO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.messaging.Source;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +23,9 @@ public class ProductService {
 
     @Autowired
     private ProductInfoRepository productRepository;
+
+    @Autowired
+    private Source source;
 
     public Optional<ProductInfo> findOne(String productId) {
         return productRepository.findById(productId);
@@ -60,5 +62,6 @@ public class ProductService {
             p.setProductStock(p.getProductStock() - cart.getProductQuantity());
         });
         productRepository.saveAll(products);
+        source.output().send(MessageBuilder.withPayload(JsonMapper.objectToJson(products)).build());
     }
 }
