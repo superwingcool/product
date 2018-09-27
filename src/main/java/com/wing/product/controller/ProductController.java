@@ -39,7 +39,8 @@ public class ProductController {
     }
 
     @GetMapping("/{productIds}")
-    public List<ProductInfo> getProductsByIds(@PathVariable("productIds") String[] productIds) {
+    public List<ProductInfo> getProductsByIds(@PathVariable("productIds") String[] productIds) throws InterruptedException {
+        Thread.sleep(2000);
         return productService.getProductsByIds(productIds);
     }
 
