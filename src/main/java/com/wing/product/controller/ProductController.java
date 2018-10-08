@@ -6,6 +6,7 @@ import com.wing.product.util.ResultVOUtil;
 import com.wing.product.vo.CartVO;
 import com.wing.product.vo.ProductVO;
 import com.wing.product.vo.ResultVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/products")
+@Slf4j
 public class ProductController {
 
     @Autowired
@@ -25,7 +27,7 @@ public class ProductController {
 
     @GetMapping
     public ResultVO list() {
-
+        log.info("1111111");
         List<ProductInfo> products = productService.findUpAll();
         List<ProductVO> productVOs = new ArrayList<>();
         products.forEach(p -> {
@@ -41,6 +43,7 @@ public class ProductController {
     @GetMapping("/{productIds}")
     public List<ProductInfo> getProductsByIds(@PathVariable("productIds") String[] productIds) throws InterruptedException {
         Thread.sleep(2000);
+        log.info("2222");
         return productService.getProductsByIds(productIds);
     }
 

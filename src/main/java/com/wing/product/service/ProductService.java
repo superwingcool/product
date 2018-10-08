@@ -7,6 +7,7 @@ import com.wing.product.repository.ProductInfoRepository;
 import com.wing.product.util.JsonMapper;
 import com.wing.product.vo.CartVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.sleuth.instrument.web.client.feign.TraceFeignClientAutoConfiguration;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,7 @@ public class ProductService {
     }
 
     public List<ProductInfo> getProductsByIds(String[] productIds) {
+
         return productRepository.findByProductIdIn(Arrays.asList(productIds));
 //        List<ProductVO> productVOs = new ArrayList<>();
 //        products.forEach(p -> {

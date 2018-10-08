@@ -30,3 +30,6 @@ spring:
       bindings:
         output:
           destination: order_test
+logging:
+  level:
+    org.springframework.cloud.netflix.feign: debug
